@@ -1,1 +1,29 @@
+body.dark{
 
+    background:#0f172a;
+
+    color:#fff;
+
+}
+
+body.dark .card,
+body.dark .datetime,
+body.dark #themeBtn{
+
+    background:#1e293b;
+
+    color:#fff;
+
+}
+
+body.dark #date{
+
+    color:#b8c3d4;
+
+}
+
+body.dark .logo{
+
+    background:#fff;
+
+}
