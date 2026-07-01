@@ -432,3 +432,54 @@ text-decoration:none;
 color:inherit;
 
 }
+/*==========================
+Header Buttons
+==========================*/
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.icon-btn{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+    font-size:18px;
+
+}
+
+.icon-btn:hover{
+
+    transform:scale(1.08);
+
+}
