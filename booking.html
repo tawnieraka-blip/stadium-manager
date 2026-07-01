@@ -1,1 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>حجز جديد</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/mobile.css">
+
+    <link rel="stylesheet" href="css/dark.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<a href="index.html" id="backBtn">
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+<h1>حجز جديد</h1>
+
+<div id="bookingId">
+
+BK-2026-000001
+
+</div>
+
+</header>
+
+
+<div class="booking-card">
+
+<label>
+
+<i class="fa-solid fa-users"></i>
+
+اسم الفريق
+
+</label>
+
+<input
+type="text"
+id="team"
+placeholder="اكتب اسم الفريق">
+
+
+<label>
+
+<i class="fa-solid fa-calendar-days"></i>
+
+تاريخ الحجز
+
+</label>
+
+<input
+type="date"
+id="date">
+
+
+<label>
+
+<i class="fa-solid fa-clock"></i>
+
+وقت البداية
+
+</label>
+
+<input
+type="time"
+id="startTime">
+
+
+<label>
+
+<i class="fa-solid fa-hourglass-half"></i>
+
+عدد الساعات
+
+</label>
+
+<div class="hours-box">
+
+<button
+type="button"
+id="minus">
+
+−
+
+</button>
+
+<input
+type="number"
+id="hours"
+value="1"
+min="1"
+max="12"
+readonly>
+
+<button
+type="button"
+id="plus">
+
++
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="summary-card">
+
+<h3>
+
+ملخص الحجز
+
+</h3>
+
+<div class="summary-row">
+
+<span>
+
+اليوم
+
+</span>
+
+<strong id="dayName">
+
+--
+
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+وقت النهاية
+
+</span>
+
+<strong id="endTime">
+
+--
+
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+سعر الساعة
+
+</span>
+
+<strong id="hourPrice">
+
+100 ريال
+
+</strong>
+
+</div>
+
+<div class="summary-row total">
+
+<span>
+
+الإجمالي
+
+</span>
+
+<strong id="totalPrice">
+
+100 ريال
+
+</strong>
+
+</div>
+
+</div>
+
+
+<button
+id="saveBooking"
+class="save-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+حفظ الحجز
+
+</button>
+
+<a
+href="index.html"
+class="back-home">
+
+العودة للرئيسية
+
+</a>
+
+</div>
+
+<script src="js/config.js"></script>
+
+<script src="js/storage.js"></script>
+
+<script src="js/utils.js"></script>
+
+<script src="js/booking.js"></script>
+
+</body>
+
+</html>
