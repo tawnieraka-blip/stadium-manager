@@ -1,1 +1,33 @@
+@media(max-width:480px){
 
+header h1{
+
+    font-size:20px;
+
+}
+
+#clock{
+
+    font-size:34px;
+
+}
+
+.card{
+
+    padding:18px;
+
+}
+
+.card span{
+
+    font-size:19px;
+
+}
+
+.card i{
+
+    font-size:30px;
+
+}
+
+}
