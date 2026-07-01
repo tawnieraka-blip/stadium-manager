@@ -1,1 +1,270 @@
+/* ==========================
+   إدارة ملعب الجمعية
+========================== */
 
+:root{
+
+    --primary:#1E88E5;
+    --secondary:#43A047;
+
+    --warning:#FB8C00;
+
+    --bg:#eef3f8;
+
+    --card:#ffffff;
+
+    --text:#1c2733;
+
+    --shadow:0 12px 35px rgba(0,0,0,.12);
+
+    --radius:22px;
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Cairo',sans-serif;
+
+    background:linear-gradient(135deg,#dfefff,#edf5ff,#f6fbff);
+
+    min-height:100vh;
+
+    color:var(--text);
+
+}
+
+.container{
+
+    width:min(95%,430px);
+
+    margin:auto;
+
+    padding:20px;
+
+}
+
+/*========================*/
+
+header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:10px;
+
+}
+
+.logo{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:6px;
+
+    box-shadow:var(--shadow);
+
+}
+
+header h1{
+
+    flex:1;
+
+    text-align:center;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+#themeBtn{
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    background:#fff;
+
+    box-shadow:var(--shadow);
+
+    font-size:20px;
+
+    transition:.3s;
+
+}
+
+#themeBtn:hover{
+
+    transform:rotate(25deg);
+
+}
+
+/*========================*/
+
+.datetime{
+
+    margin-top:30px;
+
+    background:rgba(255,255,255,.55);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:var(--radius);
+
+    text-align:center;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+#clock{
+
+    font-size:40px;
+
+    font-weight:bold;
+
+    color:var(--primary);
+
+}
+
+#day{
+
+    margin-top:10px;
+
+    font-size:24px;
+
+}
+
+#date{
+
+    margin-top:8px;
+
+    color:#777;
+
+    font-size:18px;
+
+}
+
+/*========================*/
+
+.menu{
+
+    margin-top:30px;
+
+    display:grid;
+
+    gap:18px;
+
+}
+
+.card{
+
+    position:relative;
+
+    background:rgba(255,255,255,.65);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:22px;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    padding:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    transition:.3s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.card i{
+
+    font-size:34px;
+
+    width:60px;
+
+    text-align:center;
+
+    color:var(--primary);
+
+}
+
+.card span{
+
+    flex:1;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.card div{
+
+    width:36px;
+
+    height:36px;
+
+    background:var(--warning);
+
+    color:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:bold;
+
+}
+
+/*========================*/
+
+footer{
+
+    margin:25px 0;
+
+    text-align:center;
+
+    color:#666;
+
+    font-size:14px;
+
+}
