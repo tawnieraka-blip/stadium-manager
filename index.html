@@ -3,23 +3,21 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>إدارة ملعب الجمعية</title>
+    <title>إدارة ملعب الجمعية</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/dark.css">
 
-<link rel="stylesheet" href="css/mobile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="stylesheet" href="css/dark.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -27,76 +25,80 @@
 
 <div class="container">
 
-<header>
+    <header>
 
-<img src="assets/logo.png" class="logo">
+        <img src="assets/logo.png" class="logo">
 
-<h1>إدارة ملعب الجمعية</h1>
+        <h1>إدارة ملعب الجمعية</h1>
 
-<button id="themeBtn">
+        <div class="header-actions">
 
-<i class="fa-solid fa-moon"></i>
+            <button id="themeBtn" class="icon-btn">
+                <i class="fa-solid fa-moon"></i>
+            </button>
 
-</button>
+            <a href="settings.html" class="icon-btn">
+                <i class="fa-solid fa-gear"></i>
+            </a>
 
-</header>
+        </div>
 
-<section class="datetime">
+    </header>
 
-<div id="clock"></div>
+    <section class="datetime">
 
-<div id="day"></div>
+        <div id="clock"></div>
 
-<div id="date"></div>
+        <div id="day"></div>
 
-</section>
+        <div id="date"></div>
 
-<section class="menu">
+    </section>
 
-<a href="booking.html" class="card">
+    <section class="menu">
 
-<i class="fa-solid fa-plus"></i>
+        <a href="booking.html" class="card">
 
-<span>حجز جديد</span>
+            <i class="fa-solid fa-plus"></i>
 
-</a>
+            <span>حجز جديد</span>
 
-<a href="pending.html" class="card">
+        </a>
 
-<i class="fa-solid fa-hourglass-half"></i>
+        <a href="pending.html" class="card">
 
-<span>الحجوزات المعلقة</span>
+            <i class="fa-solid fa-hourglass-half"></i>
 
-<div id="pendingCount">0</div>
+            <span>الحجوزات المعلقة</span>
 
-</a>
+            <div id="pendingCount">0</div>
 
-<a href="confirmed.html" class="card">
+        </a>
 
-<i class="fa-solid fa-circle-check"></i>
+        <a href="confirmed.html" class="card">
 
-<span>الحجوزات المؤكدة</span>
+            <i class="fa-solid fa-circle-check"></i>
 
-<div id="confirmedCount">0</div>
+            <span>الحجوزات المؤكدة</span>
 
-</a>
+            <div id="confirmedCount">0</div>
 
-<a href="statistics.html" class="card">
+        </a>
 
-<i class="fa-solid fa-chart-column"></i>
+        <a href="statistics.html" class="card">
 
-<span>الإحصائيات</span>
+            <i class="fa-solid fa-chart-column"></i>
 
-</a>
+            <span>الإحصائيات</span>
 
-</section>
+        </a>
+
+    </section>
 
 </div>
 
 <script src="js/theme.js"></script>
-
 <script src="js/storage.js"></script>
-
 <script src="js/app.js"></script>
 
 </body>
