@@ -144,6 +144,6 @@ loadConfirmedBookings();
 
 function editBooking(id){
 
-window.location.href="booking.html?id="+id;
+    window.location.href = "booking.html?id=" + id;
 
 }
