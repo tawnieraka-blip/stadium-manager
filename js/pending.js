@@ -164,6 +164,6 @@ function confirmBooking(id){
 // تعديل
 function editBooking(id){
 
-    alert("سيتم بناء صفحة التعديل في المرحلة القادمة.");
+    window.location.href = "booking.html?id=" + id;
 
 }
