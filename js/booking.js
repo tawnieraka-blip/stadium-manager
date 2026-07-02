@@ -28,6 +28,7 @@ const saveBtn = document.getElementById("saveBooking");
 const settings = BookingStorage.getSettings();
 
 let pricePerHour = settings.pricePerHour || 100;
+let endTime24 = "";
 
 hourPrice.textContent = `${pricePerHour} ريال`;
 
@@ -36,8 +37,7 @@ hourPrice.textContent = `${pricePerHour} ريال`;
 // رقم الحجز
 //==============================
 
-bookingId.innerHTML = BookingStorage.generateBookingId();
-
+bookingId.textContent = BookingStorage.generateBookingId();
 //==============================
 // زيادة الساعات
 //==============================
@@ -125,7 +125,7 @@ function updateDay() {
 
     const d = new Date(dateInput.value);
 
-    dayName.innerHTML = days[d.getDay()];
+    dayName.textContent = days[d.getDay()];
 
 }
 
@@ -137,7 +137,7 @@ function updateEndTime() {
 
     if (!startInput.value) {
 
-        endTime.innerHTML = "--";
+        endTime.textContent = "--";
 
         return;
 
@@ -159,7 +159,7 @@ String(h).padStart(2, "0") +
 String(m).padStart(2, "0");
 
 endTime.textContent = formatTime12(endTime24);
-
+   
 }
 
 //==============================
@@ -174,8 +174,8 @@ function updateTotal() {
 
         pricePerHour;
 
-    totalPrice.innerHTML = `${total} ريال`;
-
+    totalPrice.textContent = `${total} ريال`;
+   
 }
 
 //==============================
@@ -210,15 +210,15 @@ saveBtn.onclick = () => {
 
     if (
 
-        BookingStorage.isDuplicate(
+        BookingStorage.hasOverlap(
 
-            teamInput.value,
+    dateInput.value,
 
-            dateInput.value,
+    startInput.value,
 
-            startInput.value
+    endTime24
 
-        )
+)
 
     ) {
 
@@ -256,11 +256,11 @@ saveBtn.onclick = () => {
 
         date: dateInput.value,
 
-        day: dayName.innerHTML,
+        day: dayName.textContent,
 
         startTime: startInput.value,
 
-        endTime: endTime.innerHTML,
+        endTime: endTime24,
 
         hours: Number(hoursInput.value),
 
@@ -296,13 +296,13 @@ function clearForm() {
 
     hoursInput.value = 1;
 
-    dayName.innerHTML = "--";
+    dayName.textContent = "--";
 
-    endTime.innerHTML = "--";
+    endTime.textContent = "--";
 
     updateSummary();
 
-    bookingId.innerHTML = BookingStorage.generateBookingId();
+    bookingId.textContent = BookingStorage.generateBookingId();
 
     teamInput.focus();
 
