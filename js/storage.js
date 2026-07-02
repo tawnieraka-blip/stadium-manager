@@ -221,7 +221,6 @@ class BookingStorage {
 
     }
 
-}
 //==============================
 // الإعدادات
 //==============================
@@ -268,4 +267,8 @@ static resetSettings() {
 
     localStorage.removeItem(this.SETTINGS_KEY);
 
+  }
+
+
+   
 }
