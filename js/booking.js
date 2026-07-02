@@ -6,7 +6,8 @@
 //==============================
 // عناصر الصفحة
 //==============================
-
+const params = new URLSearchParams(window.location.search);
+const editId = params.get("id");
 const teamInput = document.getElementById("team");
 const dateInput = document.getElementById("date");
 const startInput = document.getElementById("startTime");
@@ -56,13 +57,26 @@ init();
 
 function init() {
 
+    // تحميل الإعدادات
     loadSettings();
 
-    bookingId.textContent = BookingStorage.generateBookingId();
-
+    // القيمة الافتراضية لعدد الساعات
     hoursInput.value = 1;
 
-    updateSummary();
+    // إذا كان تعديل حجز
+    if (editId) {
+
+        loadBookingForEdit();
+
+    } else {
+
+        // إنشاء رقم حجز جديد
+        bookingId.textContent = BookingStorage.generateBookingId();
+
+        // تحديث الملخص
+        updateSummary();
+
+    }
 
 }
 
@@ -368,5 +382,36 @@ function clearForm() {
 
     // وضع المؤشر في اسم الفريق
     teamInput.focus();
+
+}
+//==============================
+// تحميل الحجز للتعديل
+//==============================
+
+function loadBookingForEdit() {
+
+    const booking = BookingStorage.getBooking(editId);
+
+    if (!booking) {
+
+        alert("الحجز غير موجود");
+
+        window.location.href = "pending.html";
+
+        return;
+
+    }
+
+    bookingId.textContent = booking.id;
+
+    teamInput.value = booking.team;
+
+    dateInput.value = booking.date;
+
+    startInput.value = booking.startTime;
+
+    hoursInput.value = booking.hours;
+
+    updateSummary();
 
 }
