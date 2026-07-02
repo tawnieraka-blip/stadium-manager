@@ -58,8 +58,6 @@ saveBtn.onclick = () => {
 
         pricePerHour: Number(pricePerHour.value),
 
-        theme: themeSelect.value,
-
         apiUrl: apiUrl.value.trim(),
 
         version: "1.0"
@@ -67,10 +65,6 @@ saveBtn.onclick = () => {
     };
 
     BookingStorage.saveSettings(settings);
-
-    applyTheme(settings.theme);
-
-    updateApiStatus();
 
     alert("تم حفظ الإعدادات بنجاح");
 
