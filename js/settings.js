@@ -3,21 +3,12 @@
 ========================================== */
 
 const stadiumName = document.getElementById("stadiumName");
-
 const associationName = document.getElementById("associationName");
-
 const pricePerHour = document.getElementById("pricePerHour");
-
-const themeSelect = document.getElementById("themeSelect");
-
 const apiUrl = document.getElementById("apiUrl");
-
 const apiStatus = document.getElementById("apiStatus");
-
 const saveBtn = document.getElementById("saveSettings");
-
 const resetBtn = document.getElementById("resetSettings");
-
 
 //==============================
 // تحميل الإعدادات
@@ -25,102 +16,85 @@ const resetBtn = document.getElementById("resetSettings");
 
 loadSettings();
 
-function loadSettings(){
+function loadSettings() {
 
     const settings = BookingStorage.getSettings();
 
-    stadiumName.value = settings.stadiumName;
+    stadiumName.value = settings.stadiumName || "";
 
-    associationName.value = settings.associationName;
+    associationName.value = settings.associationName || "";
 
-    pricePerHour.value = settings.pricePerHour;
+    pricePerHour.value = settings.pricePerHour || 100;
 
-    themeSelect.value = settings.theme;
-
-    apiUrl.value = settings.apiUrl;
+    apiUrl.value = settings.apiUrl || "";
 
     updateApiStatus();
 
 }
 
-
 //==============================
-// حفظ
+// حفظ الإعدادات
 //==============================
 
-saveBtn.onclick = () => {
+saveBtn.addEventListener("click", () => {
 
-    const settings = {
+    const settings = BookingStorage.getSettings();
 
-        stadiumName: stadiumName.value.trim(),
+    settings.stadiumName = stadiumName.value.trim();
 
-        associationName: associationName.value.trim(),
+    settings.associationName = associationName.value.trim();
 
-        pricePerHour: Number(pricePerHour.value),
+    settings.pricePerHour = Number(pricePerHour.value) || 100;
 
-        apiUrl: apiUrl.value.trim(),
+    settings.apiUrl = apiUrl.value.trim();
 
-        version: "1.0"
-
-    };
+    settings.version = "1.0";
 
     BookingStorage.saveSettings(settings);
 
+    updateApiStatus();
+
     alert("تم حفظ الإعدادات بنجاح");
 
-};
-
+});
 
 //==============================
 // إعادة الضبط
 //==============================
 
-resetBtn.onclick = () => {
+resetBtn.addEventListener("click", () => {
 
-    if(!confirm("هل تريد إعادة الإعدادات الافتراضية؟"))
+    if (!confirm("هل تريد إعادة الإعدادات الافتراضية؟")) {
+
         return;
+
+    }
 
     BookingStorage.resetSettings();
 
     loadSettings();
 
-};
+    alert("تمت إعادة ضبط الإعدادات");
 
-
-//==============================
-// تطبيق الثيم
-//==============================
-
-function applyTheme(theme){
-
-    document.body.classList.remove("dark");
-
-    if(theme==="dark"){
-
-        document.body.classList.add("dark");
-
-    }
-
-}
-
+});
 
 //==============================
 // حالة Google Sheets
 //==============================
 
-function updateApiStatus(){
+function updateApiStatus() {
 
-    if(apiUrl.value.trim()===""){
+    if (apiUrl.value.trim() === "") {
 
-        apiStatus.innerHTML="🔴 غير مربوط";
+        apiStatus.textContent = "🔴 غير مربوط";
 
-        apiStatus.style.color="red";
+        apiStatus.style.color = "#ef4444";
 
-    }else{
+    } else {
 
-        apiStatus.innerHTML="🟢 جاهز للربط";
+        apiStatus.textContent = "🟢 جاهز للربط";
 
-        apiStatus.style.color="green";
+        apiStatus.style.color = "#16a34a";
 
     }
 
