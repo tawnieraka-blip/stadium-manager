@@ -25,12 +25,11 @@ const saveBtn = document.getElementById("saveBooking");
 // الإعدادات
 //==============================
 
-let pricePerHour = 100;
+const settings = BookingStorage.getSettings();
 
-if (typeof DEFAULT_SETTINGS !== "undefined") {
+let pricePerHour = settings.pricePerHour || 100;
 
-    pricePerHour = DEFAULT_SETTINGS.pricePerHour;
-
+hourPrice.textContent = `${pricePerHour} ريال`;
 }
 
 hourPrice.innerHTML = `${pricePerHour} ريال`;
