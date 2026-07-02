@@ -147,11 +147,19 @@ class BookingStorage {
     //==============================
     // منع التكرار
     //==============================
-    static isDuplicate(team, date, startTime) {
+    static isDuplicate(team, date, startTime, ignoreId = null) {
 
-        return this
-            .getBookings()
-            .some(item =>
+    return this
+        .getBookings()
+        .some(item => {
+
+            if (ignoreId && item.id === ignoreId) {
+
+                return false;
+
+            }
+
+            return (
 
                 item.team === team &&
                 item.date === date &&
@@ -159,7 +167,9 @@ class BookingStorage {
 
             );
 
-    }
+        });
+
+}
 
     //==============================
     // منع التعارض
