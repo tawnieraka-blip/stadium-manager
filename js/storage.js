@@ -222,3 +222,50 @@ class BookingStorage {
     }
 
 }
+//==============================
+// الإعدادات
+//==============================
+
+static SETTINGS_KEY = "stadiumSettings";
+
+static getSettings() {
+
+    const defaultSettings = {
+
+        stadiumName: "ملعب جمعية الراكة",
+
+        associationName: "جمعية الدعوة والإرشاد وتوعية الجاليات بالراكة",
+
+        pricePerHour: 100,
+
+        theme: "light",
+
+        apiUrl: "",
+
+        version: "1.0"
+
+    };
+
+    const data = localStorage.getItem(this.SETTINGS_KEY);
+
+    return data ? JSON.parse(data) : defaultSettings;
+
+}
+
+static saveSettings(settings) {
+
+    localStorage.setItem(
+
+        this.SETTINGS_KEY,
+
+        JSON.stringify(settings)
+
+    );
+
+}
+
+static resetSettings() {
+
+    localStorage.removeItem(this.SETTINGS_KEY);
+
+}
