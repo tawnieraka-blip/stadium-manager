@@ -1068,3 +1068,50 @@ SETTINGS PAGE
     font-weight:bold;
 
 }
+/*==============================
+عداد الكروت
+==============================*/
+
+.card{
+
+    position:relative;
+
+}
+
+.card-badge{
+
+    position:absolute;
+
+    top:15px;
+
+    left:15px;
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:50%;
+
+    background:#ff9800;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+
+}
+
+.card-badge.confirmed{
+
+    background:#22c55e;
+
+}
