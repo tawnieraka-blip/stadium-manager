@@ -1,7 +1,11 @@
 /* ==========================================
    Booking Page
-   Stadium Manager v1.0
+   Stadium Manager v2.0
 ========================================== */
+
+//==============================
+// عناصر الصفحة
+//==============================
 
 const teamInput = document.getElementById("team");
 const dateInput = document.getElementById("date");
@@ -16,10 +20,11 @@ const bookingId = document.getElementById("bookingId");
 
 const dayName = document.getElementById("dayName");
 const endTime = document.getElementById("endTime");
-const totalPrice = document.getElementById("totalPrice");
 const hourPrice = document.getElementById("hourPrice");
+const totalPrice = document.getElementById("totalPrice");
 
 const saveBtn = document.getElementById("saveBooking");
+
 
 //==============================
 // الإعدادات
@@ -27,61 +32,82 @@ const saveBtn = document.getElementById("saveBooking");
 
 const settings = BookingStorage.getSettings();
 
-let pricePerHour = settings.pricePerHour || 100;
+const pricePerHour = Number(settings.pricePerHour) || 100;
+
 let endTime24 = "";
 
-hourPrice.textContent = `${pricePerHour} ريال`;
+
+//==============================
+// بداية الصفحة
+//==============================
+
+init();
+
+function init() {
+
+    bookingId.textContent = BookingStorage.generateBookingId();
+
+    hourPrice.textContent = `${pricePerHour} ريال`;
+
+    hoursInput.value = 1;
+
+    updateSummary();
+
+}
 
 
 //==============================
-// رقم الحجز
+// الأحداث
 //==============================
 
-bookingId.textContent = BookingStorage.generateBookingId();
+plusBtn.addEventListener("click", increaseHours);
+
+minusBtn.addEventListener("click", decreaseHours);
+
+dateInput.addEventListener("change", updateSummary);
+
+startInput.addEventListener("change", updateSummary);
+
+saveBtn.addEventListener("click", saveBooking);
+
+
 //==============================
 // زيادة الساعات
 //==============================
 
-plusBtn.onclick = () => {
+function increaseHours(){
 
-    let h = Number(hoursInput.value);
+    let value = Number(hoursInput.value);
 
-    if (h < 12) {
+    if(value >= 12) return;
 
-        hoursInput.value = h + 1;
+    hoursInput.value = value + 1;
 
-        updateSummary();
+    updateSummary();
 
-    }
+}
 
-};
 
 //==============================
 // تقليل الساعات
 //==============================
 
-minusBtn.onclick = () => {
+function decreaseHours(){
 
-    let h = Number(hoursInput.value);
+    let value = Number(hoursInput.value);
 
-    if (h > 1) {
+    if(value <= 1) return;
 
-        hoursInput.value = h - 1;
+    hoursInput.value = value - 1;
 
-        updateSummary();
+    updateSummary();
 
-    }
-
-};
-
+}
 //==============================
 // تحديث الملخص
 //==============================
 
-dateInput.onchange = updateSummary;
-startInput.onchange = updateSummary;
-
-function updateSummary() {
+function updateSummary(){
 
     updateDay();
 
@@ -91,21 +117,22 @@ function updateSummary() {
 
 }
 
+
 //==============================
-// اليوم
+// تحديث اليوم
 //==============================
 
-function updateDay() {
+function updateDay(){
 
-    if (!dateInput.value) {
+    if(!dateInput.value){
 
-        dayName.innerHTML = "--";
+        dayName.textContent="--";
 
         return;
 
     }
 
-    const days = [
+    const days=[
 
         "الأحد",
 
@@ -123,70 +150,97 @@ function updateDay() {
 
     ];
 
-    const d = new Date(dateInput.value);
+    const date=new Date(dateInput.value);
 
-    dayName.textContent = days[d.getDay()];
+    dayName.textContent=days[date.getDay()];
 
 }
 
+
 //==============================
-// وقت النهاية
+// حساب وقت النهاية
 //==============================
 
-function updateEndTime() {
+function updateEndTime(){
 
-    if (!startInput.value) {
+    if(!startInput.value){
 
-        endTime.textContent = "--";
+        endTime24="";
+
+        endTime.textContent="--";
 
         return;
 
     }
 
-    let parts = startInput.value.split(":");
+    let [hour,minute]=startInput.value.split(":");
 
-    let h = parseInt(parts[0]);
+    hour=Number(hour);
 
-    let m = parseInt(parts[1]);
+    minute=Number(minute);
 
-    h += Number(hoursInput.value);
+    hour+=Number(hoursInput.value);
 
-    while (h >= 24) h -= 24;
+    while(hour>=24){
 
-    endTime24 =
-String(h).padStart(2, "0") +
-":" +
-String(m).padStart(2, "0");
+        hour-=24;
 
-endTime.textContent = formatTime12(endTime24);
-   
+    }
+
+    endTime24=
+
+        String(hour).padStart(2,"0")
+
+        +":"
+
+        +String(minute).padStart(2,"0");
+
+
+    if(typeof formatTime12==="function"){
+
+        endTime.textContent=formatTime12(endTime24);
+
+    }else{
+
+        endTime.textContent=endTime24;
+
+    }
+
 }
 
+
 //==============================
-// السعر
+// حساب السعر
 //==============================
 
-function updateTotal() {
+function updateTotal(){
 
-    const total =
+    const total=
 
-        Number(hoursInput.value) *
+        Number(hoursInput.value)
+
+        *
 
         pricePerHour;
 
-    totalPrice.textContent = `${total} ريال`;
-   
-}
+    totalPrice.textContent=
 
+        total+" ريال";
+
+}
 //==============================
 // حفظ الحجز
 //==============================
 
-saveBtn.onclick = () => {
+function saveBooking() {
 
-    if (teamInput.value.trim() === "") {
+    const team = teamInput.value.trim();
+
+    if (team === "") {
 
         alert("اكتب اسم الفريق");
+
+        teamInput.focus();
 
         return;
 
@@ -194,7 +248,7 @@ saveBtn.onclick = () => {
 
     if (!dateInput.value) {
 
-        alert("اختر التاريخ");
+        alert("اختر تاريخ الحجز");
 
         return;
 
@@ -209,40 +263,28 @@ saveBtn.onclick = () => {
     }
 
     if (
-
-        BookingStorage.hasOverlap(
-
-    dateInput.value,
-
-    startInput.value,
-
-    endTime24
-
-)
-
+        BookingStorage.isDuplicate(
+            team,
+            dateInput.value,
+            startInput.value
+        )
     ) {
 
-        alert("هذا الحجز موجود مسبقاً");
+        alert("هذا الحجز موجود مسبقًا");
 
         return;
 
     }
 
     if (
-
         BookingStorage.hasOverlap(
-
             dateInput.value,
-
             startInput.value,
-
-            endTime: endTime24,
-
+            endTime24
         )
-
     ) {
 
-        alert("يوجد حجز آخر بنفس الوقت");
+        alert("يوجد حجز آخر في نفس الوقت");
 
         return;
 
@@ -252,7 +294,7 @@ saveBtn.onclick = () => {
 
         id: BookingStorage.generateBookingId(),
 
-        team: teamInput.value.trim(),
+        team: team,
 
         date: dateInput.value,
 
@@ -270,7 +312,7 @@ saveBtn.onclick = () => {
 
         status: "pending",
 
-        createdAt: new Date().toLocaleString("ar-EG")
+        createdAt: new Date().toISOString()
 
     };
 
@@ -280,7 +322,8 @@ saveBtn.onclick = () => {
 
     clearForm();
 
-};
+}
+
 
 //==============================
 // تفريغ النموذج
@@ -300,12 +343,12 @@ function clearForm() {
 
     endTime.textContent = "--";
 
-    updateSummary();
+    endTime24 = "";
+
+    totalPrice.textContent = `${pricePerHour} ريال`;
 
     bookingId.textContent = BookingStorage.generateBookingId();
 
     teamInput.focus();
 
 }
-
-updateSummary();
