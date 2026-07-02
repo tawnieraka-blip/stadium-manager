@@ -155,10 +155,12 @@ function updateEndTime() {
 
     while (h >= 24) h -= 24;
 
-    endTime.innerHTML =
-        String(h).padStart(2, "0") +
-        ":" +
-        String(m).padStart(2, "0");
+    endTime24 =
+String(h).padStart(2, "0") +
+":" +
+String(m).padStart(2, "0");
+
+endTime.textContent = formatTime12(endTime24);
 
 }
 
@@ -236,7 +238,7 @@ saveBtn.onclick = () => {
 
             startInput.value,
 
-            endTime.innerHTML
+            endTime: endTime24,
 
         )
 
@@ -300,7 +302,7 @@ function clearForm() {
 
     endTime.innerHTML = "--";
 
-    totalPrice.innerHTML = `${pricePerHour} ريال`;
+    updateSummary();
 
     bookingId.innerHTML = BookingStorage.generateBookingId();
 
