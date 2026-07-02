@@ -287,14 +287,15 @@ function saveBooking() {
 
     }
 
+    // منع التكرار
     if (
-    BookingStorage.isDuplicate(
-        team,
-        dateInput.value,
-        startInput.value,
-        editId
-    )
-)
+        BookingStorage.isDuplicate(
+            team,
+            dateInput.value,
+            startInput.value,
+            editId
+        )
+    ) {
 
         alert("هذا الحجز موجود مسبقًا");
 
@@ -302,11 +303,13 @@ function saveBooking() {
 
     }
 
+    // منع التعارض
     if (
         BookingStorage.hasOverlap(
             dateInput.value,
             startInput.value,
-            endTime24
+            endTime24,
+            editId
         )
     ) {
 
@@ -315,6 +318,44 @@ function saveBooking() {
         return;
 
     }
+
+    //==============================
+    // وضع التعديل
+    //==============================
+
+    if (editId) {
+
+        BookingStorage.updateBooking(editId, {
+
+            team: team,
+
+            date: dateInput.value,
+
+            day: dayName.textContent,
+
+            startTime: startInput.value,
+
+            endTime: endTime24,
+
+            hours: Number(hoursInput.value),
+
+            pricePerHour: pricePerHour,
+
+            total: Number(hoursInput.value) * pricePerHour
+
+        });
+
+        alert("تم تعديل الحجز بنجاح");
+
+        window.location.href = "pending.html";
+
+        return;
+
+    }
+
+    //==============================
+    // إنشاء حجز جديد
+    //==============================
 
     const booking = {
 
@@ -349,7 +390,6 @@ function saveBooking() {
     clearForm();
 
 }
-
 
 //==============================
 // تفريغ النموذج
