@@ -30,9 +30,7 @@ const settings = BookingStorage.getSettings();
 let pricePerHour = settings.pricePerHour || 100;
 
 hourPrice.textContent = `${pricePerHour} ريال`;
-}
 
-hourPrice.innerHTML = `${pricePerHour} ريال`;
 
 //==============================
 // رقم الحجز
