@@ -30,12 +30,23 @@ const saveBtn = document.getElementById("saveBooking");
 // الإعدادات
 //==============================
 
-let settings = BookingStorage.getSettings();
+let settings;
+let pricePerHour;
+let endTime24 = "";
 
-let pricePerHour = Number(settings.pricePerHour) || 100;
+//==============================
+// تحميل الإعدادات
+//==============================
 
-hourPrice.textContent = `${pricePerHour} ريال`;
+function loadSettings() {
 
+    settings = BookingStorage.getSettings();
+
+    pricePerHour = Number(settings.pricePerHour) || 100;
+
+    hourPrice.textContent = `${pricePerHour} ريال`;
+
+}
 
 //==============================
 // بداية الصفحة
@@ -45,13 +56,9 @@ init();
 
 function init() {
 
-    settings = BookingStorage.getSettings();
-
-    pricePerHour = Number(settings.pricePerHour) || 100;
+    loadSettings();
 
     bookingId.textContent = BookingStorage.generateBookingId();
-
-    hourPrice.textContent = `${pricePerHour} ريال`;
 
     hoursInput.value = 1;
 
@@ -336,9 +343,7 @@ function saveBooking() {
 function clearForm() {
 
     // إعادة تحميل الإعدادات
-    settings = BookingStorage.getSettings();
-
-    pricePerHour = Number(settings.pricePerHour) || 100;
+    loadSettings();
 
     // تفريغ الحقول
     teamInput.value = "";
@@ -355,10 +360,7 @@ function clearForm() {
 
     endTime24 = "";
 
-    // تحديث سعر الساعة من الإعدادات
-    hourPrice.textContent = `${pricePerHour} ريال`;
-
-    // إعادة حساب الإجمالي
+    // إعادة حساب السعر
     updateTotal();
 
     // إنشاء رقم حجز جديد
