@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>الإحصائيات</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/dark.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<a href="index.html" id="backBtn">
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+<h1>
+
+الإحصائيات
+
+</h1>
+
+</header>
+
+
+<div class="statistics-filter">
+
+<label>
+
+اختر الشهر
+
+</label>
+
+<select id="monthSelect">
+
+<option value="0">كل الشهور</option>
+
+<option value="1">يناير</option>
+
+<option value="2">فبراير</option>
+
+<option value="3">مارس</option>
+
+<option value="4">أبريل</option>
+
+<option value="5">مايو</option>
+
+<option value="6">يونيو</option>
+
+<option value="7">يوليو</option>
+
+<option value="8">أغسطس</option>
+
+<option value="9">سبتمبر</option>
+
+<option value="10">أكتوبر</option>
+
+<option value="11">نوفمبر</option>
+
+<option value="12">ديسمبر</option>
+
+</select>
+
+</div>
+
+
+<div class="statistics-grid">
+
+<div class="stat-card">
+
+<i class="fa-solid fa-money-bill-wave"></i>
+
+<h3>الإيرادات</h3>
+
+<h2 id="incomeValue">0 ريال</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>الساعات المؤجرة</h3>
+
+<h2 id="hoursValue">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>عدد الفرق</h3>
+
+<h2 id="teamsValue">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<h3>الحجوزات المؤكدة</h3>
+
+<h2 id="confirmedValue">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-hourglass-half"></i>
+
+<h3>الحجوزات المعلقة</h3>
+
+<h2 id="pendingValue">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-trophy"></i>
+
+<h3>أكثر فريق حجزاً</h3>
+
+<h2 id="topTeamValue">---</h2>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>متوسط قيمة الحجز</h3>
+
+<h2 id="averageValue">0 ريال</h2>
+
+</div>
+
+</div>
+
+
+<a href="index.html" class="back-home">
+
+<i class="fa-solid fa-house"></i>
+
+العودة للرئيسية
+
+</a>
+
+</div>
+
+<script src="js/storage.js"></script>
+
+<script src="js/statistics.js"></script>
+
+</body>
+
+</html>
