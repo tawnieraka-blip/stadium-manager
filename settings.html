@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>الإعدادات</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mobile.css">
+<link rel="stylesheet" href="css/dark.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+rel="stylesheet">
+
+<script src="https://kit.fontawesome.com/6b7bcb1d74.js"
+crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<a href="index.html" id="backBtn">
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+<h1>
+
+الإعدادات
+
+</h1>
+
+</header>
+
+<!-- بيانات الملعب -->
+
+<div class="settings-card">
+
+<h2>
+
+<i class="fa-solid fa-futbol"></i>
+
+بيانات الملعب
+
+</h2>
+
+<label>
+
+اسم الملعب
+
+</label>
+
+<input
+type="text"
+id="stadiumName">
+
+<label>
+
+اسم الجمعية
+
+</label>
+
+<input
+type="text"
+id="associationName">
+
+</div>
+
+<!-- الأسعار -->
+
+<div class="settings-card">
+
+<h2>
+
+<i class="fa-solid fa-money-bill-wave"></i>
+
+الأسعار
+
+</h2>
+
+<label>
+
+سعر الساعة
+
+</label>
+
+<input
+type="number"
+id="pricePerHour">
+
+</div>
+
+<!-- المظهر -->
+
+<div class="settings-card">
+
+<h2>
+
+<i class="fa-solid fa-palette"></i>
+
+المظهر
+
+</h2>
+
+<select id="themeSelect">
+
+<option value="light">
+
+☀️ الوضع الفاتح
+
+</option>
+
+<option value="dark">
+
+🌙 الوضع الداكن
+
+</option>
+
+</select>
+
+</div>
+
+<!-- Google Sheets -->
+
+<div class="settings-card">
+
+<h2>
+
+<i class="fa-brands fa-google"></i>
+
+Google Sheets
+
+</h2>
+
+<label>
+
+رابط Apps Script
+
+</label>
+
+<input
+type="text"
+id="apiUrl"
+placeholder="الصق رابط Google Apps Script">
+
+<p
+class="status"
+id="apiStatus">
+
+غير مربوط
+
+</p>
+
+</div>
+
+<!-- معلومات التطبيق -->
+
+<div class="settings-card">
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+حول التطبيق
+
+</h2>
+
+<p>
+
+الإصدار
+
+<span>
+
+1.0
+
+</span>
+
+</p>
+
+<p>
+
+إدارة ملعب الجمعية
+
+</p>
+
+</div>
+
+<button
+id="saveSettings"
+class="save-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+حفظ الإعدادات
+
+</button>
+
+<button
+id="resetSettings"
+class="reset-btn">
+
+<i class="fa-solid fa-rotate-left"></i>
+
+إعادة الضبط
+
+</button>
+
+<a
+href="index.html"
+class="back-home">
+
+<i class="fa-solid fa-house"></i>
+
+العودة للرئيسية
+
+</a>
+
+</div>
+
+<script src="js/storage.js"></script>
+
+<script src="js/settings.js"></script>
+
+</body>
+
+</html>
