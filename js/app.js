@@ -41,3 +41,19 @@ document.getElementById("date").innerHTML=
 updateClock();
 
 setInterval(updateClock,1000);
+
+//==============================
+// تحديث العدادات
+//==============================
+
+function updateCounters(){
+
+    const pending = BookingStorage.getPending().length;
+
+    const confirmed = BookingStorage.getConfirmed().length;
+
+    document.getElementById("pendingCount").textContent = pending;
+
+    document.getElementById("confirmedCount").textContent = confirmed;
+
+}
