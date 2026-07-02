@@ -174,26 +174,31 @@ class BookingStorage {
     //==============================
     // منع التعارض
     //==============================
-    static hasOverlap(date, start, end) {
+    static hasOverlap(date, start, end, ignoreId = null) {
 
-        const bookings = this.getBookings();
+    const bookings = this.getBookings();
 
-        return bookings.some(item => {
+    return bookings.some(item => {
 
-            if (item.date !== date)
-                return false;
+        if (ignoreId && item.id === ignoreId) {
 
-            return (
+            return false;
 
-                start < item.endTime &&
-                end > item.startTime
+        }
 
-            );
+        if (item.date !== date)
+            return false;
 
-        });
+        return (
 
-    }
+            start < item.endTime &&
+            end > item.startTime
 
+        );
+
+    });
+
+}
     //==============================
     // الإحصائيات
     //==============================
