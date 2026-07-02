@@ -877,3 +877,194 @@ STATISTICS PAGE
     margin-top:30px;
 
 }
+/*==================================================
+SETTINGS PAGE
+==================================================*/
+
+.settings-card{
+
+    background:var(--card);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    margin:20px 0;
+
+    box-shadow:var(--shadow);
+
+}
+
+.settings-card h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:22px;
+
+    color:var(--primary);
+
+    margin-bottom:20px;
+
+}
+
+.settings-card label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:8px;
+
+    font-weight:700;
+
+}
+
+.settings-card input,
+.settings-card select{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1px solid #d9e2ec;
+
+    border-radius:14px;
+
+    background:#f8fafc;
+
+    font-size:16px;
+
+    font-family:Cairo;
+
+    transition:.3s;
+
+}
+
+.settings-card input:focus,
+.settings-card select:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(30,136,229,.15);
+
+}
+
+.settings-card p{
+
+    margin:10px 0;
+
+    font-size:16px;
+
+}
+
+.status{
+
+    margin-top:15px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:#f5f5f5;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+.save-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-family:Cairo;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.reset-btn{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-family:Cairo;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.reset-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.back-home{
+
+    display:block;
+
+    margin:25px auto;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    color:var(--primary);
+
+}
+
+.settings-card span{
+
+    float:left;
+
+    color:var(--primary);
+
+    font-weight:bold;
+
+}
