@@ -158,11 +158,10 @@ function updateEndTime() {
 
     while (h >= 24) h -= 24;
 
-    endTime.innerHTML =
-        String(h).padStart(2, "0") +
-        ":" +
-        String(m).padStart(2, "0");
+   const result =
+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
 
+endTime.innerHTML = formatTime12(result);
 }
 
 //==============================
