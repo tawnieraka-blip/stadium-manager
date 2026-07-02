@@ -25,9 +25,7 @@ const saveBtn = document.getElementById("saveBooking");
 // الإعدادات
 //==============================
 
-const settings = BookingStorage.getSettings();
-
-let pricePerHour = settings.pricePerHour || 100;
+let pricePerHour = 100;
 
 if (typeof DEFAULT_SETTINGS !== "undefined") {
 
@@ -158,10 +156,11 @@ function updateEndTime() {
 
     while (h >= 24) h -= 24;
 
-   const result =
-String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+    endTime.innerHTML =
+        String(h).padStart(2, "0") +
+        ":" +
+        String(m).padStart(2, "0");
 
-endTime.innerHTML = formatTime12(result);
 }
 
 //==============================
