@@ -288,12 +288,13 @@ function saveBooking() {
     }
 
     if (
-        BookingStorage.isDuplicate(
-            team,
-            dateInput.value,
-            startInput.value
-        )
-    ) {
+    BookingStorage.isDuplicate(
+        team,
+        dateInput.value,
+        startInput.value,
+        editId
+    )
+)
 
         alert("هذا الحجز موجود مسبقًا");
 
