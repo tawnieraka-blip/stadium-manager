@@ -29,7 +29,7 @@ class BookingAPI {
 
             return null;
 
-        }
+        } 
 
         try {
 
