@@ -33,45 +33,46 @@ class BookingAPI {
 
         }
 
-try {
+        try {
 
-    const response = await fetch(API_URL, {
+            const response = await fetch(API_URL, {
 
-        method: "POST",
+                method: "POST",
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        body: JSON.stringify({
+                body: JSON.stringify({
 
-            action,
+                    action,
 
-            ...data
+                    ...data
 
-        })
+                })
 
-    });
+            });
 
-    console.log("HTTP Status:", response.status);
+            console.log("HTTP Status:", response.status);
 
-    const text = await response.text();
+            const text = await response.text();
 
-    console.log("Response:", text);
+            console.log("Response:", text);
 
-    return JSON.parse(text);
+            return JSON.parse(text);
 
-} catch (error) {
+        } catch (error) {
 
-    console.error("BookingAPI Error:", error);
+            console.error("BookingAPI Error:", error);
 
-    alert(error.message);
+            alert(error.message);
 
-    return null;
+            return null;
 
-}
+        }
 
-    //==============================
+    }
+       //==============================
     // إضافة حجز
     //==============================
 
@@ -116,8 +117,7 @@ try {
         });
 
     }
-
-    //==============================
+       //==============================
     // تأكيد الحجز
     //==============================
 
