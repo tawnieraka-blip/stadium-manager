@@ -1,3 +1,4 @@
+console.log("app.js Loaded");
 function updateClock() {
 
     const now = new Date();
