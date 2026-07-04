@@ -1,11 +1,21 @@
 /* ==========================================
    Stadium Manager API
-   Version 1.0
+   Version 2.0
 ========================================== */
 
 class BookingAPI {
 
-    static API_URL = CONFIG.API_URL;
+    //==============================
+    // قراءة رابط Google Apps Script
+    //==============================
+
+    static getApiUrl() {
+
+        const settings = BookingStorage.getSettings();
+
+        return settings.apiUrl || "";
+
+    }
 
     //==============================
     // إرسال طلب
@@ -13,16 +23,24 @@ class BookingAPI {
 
     static async request(action, data = {}) {
 
+        const API_URL = this.getApiUrl();
+
+        if (!API_URL) {
+
+            alert("يرجى إضافة رابط Google Apps Script من صفحة الإعدادات");
+
+            return null;
+
+        }
+
         try {
 
-            const response = await fetch(this.API_URL, {
+            const response = await fetch(API_URL, {
 
                 method: "POST",
 
                 headers: {
-
                     "Content-Type": "application/json"
-
                 },
 
                 body: JSON.stringify({
@@ -56,9 +74,7 @@ class BookingAPI {
     static async saveBooking(booking) {
 
         return await this.request("saveBooking", {
-
             booking
-
         });
 
     }
@@ -80,9 +96,7 @@ class BookingAPI {
     static async updateBooking(booking) {
 
         return await this.request("updateBooking", {
-
             booking
-
         });
 
     }
@@ -94,9 +108,7 @@ class BookingAPI {
     static async deleteBooking(id) {
 
         return await this.request("deleteBooking", {
-
             id
-
         });
 
     }
@@ -108,9 +120,7 @@ class BookingAPI {
     static async confirmBooking(id) {
 
         return await this.request("confirmBooking", {
-
             id
-
         });
 
     }
