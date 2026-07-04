@@ -33,39 +33,43 @@ class BookingAPI {
 
         }
 
-        try {
+try {
 
-            const response = await fetch(API_URL, {
+    const response = await fetch(API_URL, {
 
-                method: "POST",
+        method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-                body: JSON.stringify({
+        body: JSON.stringify({
 
-                    action,
+            action,
 
-                    ...data
+            ...data
 
-                })
+        })
 
-            });
+    });
 
-            return await response.json();
+    console.log("HTTP Status:", response.status);
 
-        } catch (error) {
+    const text = await response.text();
 
-            console.error(error);
+    console.log("Response:", text);
 
-            alert("تعذر الاتصال بـ Google Sheets");
+    return JSON.parse(text);
 
-            return null;
+} catch (error) {
 
-        }
+    console.error("BookingAPI Error:", error);
 
-    }
+    alert(error.message);
+
+    return null;
+
+}
 
     //==============================
     // إضافة حجز
