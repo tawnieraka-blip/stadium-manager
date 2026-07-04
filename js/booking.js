@@ -257,7 +257,7 @@ function updateTotal(){
 // حفظ الحجز
 //==============================
 
-function saveBooking() {
+async function saveBooking() {
 
     const team = teamInput.value.trim();
 
@@ -383,11 +383,32 @@ function saveBooking() {
 
     };
 
-    BookingStorage.saveBooking(booking);
+   try {
 
-    alert("تم حفظ الحجز بنجاح");
+    const result = await BookingAPI.saveBooking(booking);
 
-    clearForm();
+    if (result && result.success) {
+
+        // احتفظ به مؤقتًا كنسخة احتياطية
+        BookingStorage.saveBooking(booking);
+
+        alert("تم حفظ الحجز بنجاح");
+
+        clearForm();
+
+    } else {
+
+        alert("فشل حفظ الحجز في Google Sheets");
+
+    }
+
+} catch (error) {
+
+    console.error(error);
+
+    alert("تعذر الاتصال بـ Google Sheets");
+
+}
 
 }
 
