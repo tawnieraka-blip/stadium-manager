@@ -78,4 +78,3 @@ updateClock();
 updateCounters();
 
 setInterval(updateClock, 1000);
-}
