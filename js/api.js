@@ -1,6 +1,6 @@
 /* ==========================================
    Stadium Manager API
-   Version 2.1
+   Version 2.2
 ========================================== */
 
 class BookingAPI {
@@ -8,7 +8,6 @@ class BookingAPI {
     //==============================
     // قراءة رابط Google Apps Script
     //==============================
-
     static getApiUrl() {
 
         const settings = BookingStorage.getSettings();
@@ -20,7 +19,6 @@ class BookingAPI {
     //==============================
     // إرسال طلب
     //==============================
-
     static async request(action, data = {}) {
 
         const API_URL = this.getApiUrl();
@@ -61,7 +59,15 @@ class BookingAPI {
 
             });
 
+            if (!response.ok) {
+
+                throw new Error("HTTP Error : " + response.status);
+
+            }
+
             const result = await response.json();
+
+            console.log("API Response:", result);
 
             return result;
 
@@ -69,7 +75,7 @@ class BookingAPI {
 
             console.error("BookingAPI Error:", error);
 
-            alert("تعذر الاتصال بـ Google Sheets");
+            alert(error.message || "تعذر الاتصال بـ Google Sheets");
 
             return null;
 
@@ -80,7 +86,6 @@ class BookingAPI {
     //==============================
     // إضافة حجز
     //==============================
-
     static async saveBooking(booking) {
 
         return await this.request("saveBooking", {
@@ -92,7 +97,6 @@ class BookingAPI {
     //==============================
     // قراءة جميع الحجوزات
     //==============================
-
     static async getBookings() {
 
         return await this.request("getBookings");
@@ -102,7 +106,6 @@ class BookingAPI {
     //==============================
     // تعديل حجز
     //==============================
-
     static async updateBooking(booking) {
 
         return await this.request("updateBooking", {
@@ -114,7 +117,6 @@ class BookingAPI {
     //==============================
     // حذف حجز
     //==============================
-
     static async deleteBooking(id) {
 
         return await this.request("deleteBooking", {
@@ -126,7 +128,6 @@ class BookingAPI {
     //==============================
     // تأكيد الحجز
     //==============================
-
     static async confirmBooking(id) {
 
         return await this.request("confirmBooking", {
@@ -138,7 +139,6 @@ class BookingAPI {
     //==============================
     // الإحصائيات
     //==============================
-
     static async getStatistics() {
 
         return await this.request("getStatistics");
