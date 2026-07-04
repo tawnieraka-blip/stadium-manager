@@ -325,26 +325,31 @@ async function saveBooking() {
 
     if (editId) {
 
-        BookingStorage.updateBooking(editId, {
+        await BookingAPI.updateBooking({
 
-            team: team,
+    id: editId,
 
-            date: dateInput.value,
+    team: team,
 
-            day: dayName.textContent,
+    date: dateInput.value,
 
-            startTime: startInput.value,
+    day: dayName.textContent,
 
-            endTime: endTime24,
+    startTime: startInput.value,
 
-            hours: Number(hoursInput.value),
+    endTime: endTime24,
 
-            pricePerHour: pricePerHour,
+    hours: Number(hoursInput.value),
 
-            total: Number(hoursInput.value) * pricePerHour
+    pricePerHour: pricePerHour,
 
-        });
+    total: Number(hoursInput.value) * pricePerHour,
 
+    status: "pending",
+
+    createdAt: new Date().toISOString()
+
+});
         alert("تم تعديل الحجز بنجاح");
 
         window.location.href = "pending.html";
