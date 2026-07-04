@@ -1,6 +1,19 @@
 console.log("app.js Loaded");
 function updateClock() {
 
+    console.log("updateClock");
+
+    const clock = document.getElementById("clock");
+    const day = document.getElementById("day");
+    const date = document.getElementById("date");
+
+    console.log(clock, day, date);
+
+    if (!clock || !day || !date) {
+        console.log("Elements not found");
+        return;
+    }
+
     const now = new Date();
 
     const days = [
@@ -14,27 +27,15 @@ function updateClock() {
     ];
 
     const months = [
-        "يناير",
-        "فبراير",
-        "مارس",
-        "أبريل",
-        "مايو",
-        "يونيو",
-        "يوليو",
-        "أغسطس",
-        "سبتمبر",
-        "أكتوبر",
-        "نوفمبر",
-        "ديسمبر"
+        "يناير","فبراير","مارس","أبريل","مايو","يونيو",
+        "يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
     ];
 
-    document.getElementById("clock").textContent =
-        now.toLocaleTimeString("ar-EG");
+    clock.textContent = now.toLocaleTimeString("ar-EG");
 
-    document.getElementById("day").textContent =
-        days[now.getDay()];
+    day.textContent = days[now.getDay()];
 
-    document.getElementById("date").textContent =
+    date.textContent =
         `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
 }
