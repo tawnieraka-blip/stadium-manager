@@ -57,7 +57,8 @@ function updateCounters() {
 
         pendingBadge.style.display = pending === 0 ? "none" : "flex";
 
-c
+      }
+
     if (confirmedBadge) {
 
         confirmedBadge.textContent = confirmed > 99 ? "99+" : confirmed;
