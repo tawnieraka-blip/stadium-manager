@@ -1,6 +1,6 @@
 /* ==========================================
    Stadium Manager API
-   Version 2.0
+   Version 2.1
 ========================================== */
 
 class BookingAPI {
@@ -35,44 +35,49 @@ class BookingAPI {
 
         try {
 
+            const formData = new URLSearchParams();
+
+            formData.append("action", action);
+
+            for (const key in data) {
+
+                if (typeof data[key] === "object") {
+
+                    formData.append(key, JSON.stringify(data[key]));
+
+                } else {
+
+                    formData.append(key, data[key]);
+
+                }
+
+            }
+
             const response = await fetch(API_URL, {
 
                 method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    action,
-
-                    ...data
-
-                })
+                body: formData
 
             });
 
-            console.log("HTTP Status:", response.status);
+            const result = await response.json();
 
-            const text = await response.text();
-
-            console.log("Response:", text);
-
-            return JSON.parse(text);
+            return result;
 
         } catch (error) {
 
             console.error("BookingAPI Error:", error);
 
-            alert(error.message);
+            alert("تعذر الاتصال بـ Google Sheets");
 
             return null;
 
         }
 
     }
-       //==============================
+
+    //==============================
     // إضافة حجز
     //==============================
 
@@ -117,7 +122,8 @@ class BookingAPI {
         });
 
     }
-       //==============================
+
+    //==============================
     // تأكيد الحجز
     //==============================
 
