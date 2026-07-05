@@ -286,39 +286,59 @@ async function saveBooking() {
         return;
 
     }
+//==============================
+// التحقق من التكرار والتعارض
+//==============================
 
-    // منع التكرار
-    if (
-        BookingStorage.isDuplicate(
-            team,
-            dateInput.value,
-            startInput.value,
-            editId
-        )
-    ) {
+const result = await BookingAPI.getBookings();
 
-        alert("هذا الحجز موجود مسبقًا");
+if (!result) {
 
-        return;
+    alert("تعذر قراءة الحجوزات من Google Sheets");
 
-    }
+    return;
 
-    // منع التعارض
-    if (
-        BookingStorage.hasOverlap(
-            dateInput.value,
-            startInput.value,
-            endTime24,
-            editId
-        )
-    ) {
+}
 
-        alert("يوجد حجز آخر في نفس الوقت");
+const bookings = Array.isArray(result) ? result : [];
 
-        return;
+const duplicate = bookings.find(item =>
 
-    }
+    item.id !== editId &&
+    item.team === team &&
+    item.date === dateInput.value &&
+    item.startTime === startInput.value
 
+);
+
+if (duplicate) {
+
+    alert("هذا الحجز موجود مسبقًا");
+
+    return;
+
+}
+
+const overlap = bookings.find(item => {
+
+    if (item.id === editId) return false;
+
+    if (item.date !== dateInput.value) return false;
+
+    return (
+        startInput.value < item.endTime &&
+        endTime24 > item.startTime
+    );
+
+});
+
+if (overlap) {
+
+    alert("يوجد حجز آخر في نفس الوقت");
+
+    return;
+
+}
     //==============================
     // وضع التعديل
     //==============================
