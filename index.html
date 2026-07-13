@@ -3,21 +3,21 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-    <title>إدارة ملعب الجمعية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mobile.css">
-    <link rel="stylesheet" href="css/dark.css">
+<title>Stadium Manager</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mobile.css">
+<link rel="stylesheet" href="css/dark.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://kit.fontawesome.com/6b7bcb1d74.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -25,80 +25,103 @@
 
 <div class="container">
 
-    <header>
+<header>
 
-        <img src="assets/logo.png" class="logo">
+<img src="assets/logo.png" class="logo" alt="شعار الجمعية">
 
-        <h1>إدارة ملعب الجمعية</h1>
+<div class="header-title">
 
-        <div class="header-actions">
+<h1>Stadium Manager</h1>
 
-            <button id="themeBtn" class="icon-btn">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+<p class="subtitle">
 
-            <a href="settings.html" class="icon-btn">
-                <i class="fa-solid fa-gear"></i>
-            </a>
+إدارة حجوزات ملعب الجمعية
 
-        </div>
+</p>
 
-    </header>
+</div>
 
-    <section class="datetime">
+<div class="header-actions">
 
-        <div id="clock"></div>
+<button id="themeBtn" class="icon-btn">
 
-        <div id="day"></div>
+<i class="fa-solid fa-moon"></i>
 
-        <div id="date"></div>
+</button>
 
-    </section>
+<a href="settings.html" class="icon-btn">
 
-    <section class="menu">
+<i class="fa-solid fa-gear"></i>
 
-        <a href="booking.html" class="card">
+</a>
 
-            <i class="fa-solid fa-plus"></i>
+</div>
 
-            <span>حجز جديد</span>
+</header>
+<section class="datetime">
 
-        </a>
+<div class="clock-box">
 
-       <a href="pending.html" class="card">
+<div id="clock" class="clock"></div>
 
-    <div class="card-badge" id="pendingCount">0</div>
+<div id="day" class="day"></div>
 
-    <i class="fa-solid fa-hourglass-half"></i>
+<div id="date" class="date"></div>
 
-    <span>الحجوزات المعلقة</span>
+</div>
+
+</section>
+
+<section class="menu">
+
+<a href="booking.html" class="card">
+
+<i class="fa-solid fa-plus"></i>
+
+<span>حجز جديد</span>
+
+</a>
+
+<a href="pending.html" class="card">
+
+<div class="card-badge" id="pendingCount"></div>
+
+<i class="fa-solid fa-hourglass-half"></i>
+
+<span>الحجوزات المعلقة</span>
 
 </a>
 
 <a href="confirmed.html" class="card">
 
-    <div class="card-badge confirmed" id="confirmedCount">0</div>
+<div class="card-badge confirmed" id="confirmedCount"></div>
 
-    <i class="fa-solid fa-circle-check"></i>
+<i class="fa-solid fa-circle-check"></i>
 
-    <span>الحجوزات المؤكدة</span>
+<span>الحجوزات المؤكدة</span>
 
 </a>
 
-        <a href="statistics.html" class="card">
+<a href="statistics.html" class="card">
 
-            <i class="fa-solid fa-chart-column"></i>
+<i class="fa-solid fa-chart-column"></i>
 
-            <span>الإحصائيات</span>
+<span>الإحصائيات</span>
 
-        </a>
+</a>
 
-    </section>
+</section>
+<footer>
+
+<p>Stadium Manager v4.0</p>
+
+</footer>
 
 </div>
 
 <script src="js/theme.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/api.js"></script>
 <script src="js/app.js"></script>
 
 </body>
