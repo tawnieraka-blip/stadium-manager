@@ -24,7 +24,7 @@ const plusBtn = document.getElementById("plus");
 const minusBtn = document.getElementById("minus");
 
 const bookingId = document.getElementById("bookingId");
-
+ 
 const dayName = document.getElementById("dayName");
 const endTime = document.getElementById("endTime");
 
