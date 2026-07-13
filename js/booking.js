@@ -318,15 +318,17 @@ async function saveBooking(){
 
         if(result.success){
 
-            alert(result.message);
+    bookingId.textContent = result.id;
 
-            clearForm();
+    alert(result.message);
 
-        }else{
+    clearForm();
 
-            alert(result.message);
+}else{
 
-        }
+    alert(result.message);
+
+}
 
     }catch(error){
 
@@ -343,7 +345,7 @@ async function saveBooking(){
 
 function clearForm(){
 
-    bookingId.textContent = "جديد";
+    bookingId.textContent = "---";
 
     teamInput.value = "";
 
