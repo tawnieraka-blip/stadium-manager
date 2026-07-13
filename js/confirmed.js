@@ -1,100 +1,136 @@
 /* ==========================================
-   Confirmed Bookings
+   Stadium Manager
+   confirmed.js v4.0
 ========================================== */
 
-const container = document.getElementById("confirmedContainer");
+//==============================
+// عناصر الصفحة
+//==============================
 
-loadConfirmedBookings();
+const bookingsContainer = document.getElementById("bookings");
 
-function loadConfirmedBookings() {
+//==============================
+// بداية الصفحة
+//==============================
 
-    const bookings = BookingStorage.getConfirmed();
+init();
 
-    const counter = document.getElementById("confirmedCounter");
+async function init(){
 
-    counter.textContent = bookings.length;
+    await loadBookings();
 
-    container.innerHTML = "";
+}
+//==============================
+// تحميل الحجوزات
+//==============================
 
-    if (bookings.length === 0) {
+async function loadBookings(){
 
-        container.innerHTML = `
-        <div class="empty-card">
-            <i class="fa-solid fa-circle-check"></i>
-            <h3>لا توجد حجوزات مؤكدة</h3>
-        </div>
-        `;
+    try{
 
-        return;
+        const bookings = await BookingAPI.getBookings();
+
+        if(!Array.isArray(bookings)){
+
+            bookingsContainer.innerHTML =
+
+            "<p>لا توجد بيانات</p>";
+
+            return;
+
+        }
+
+        renderBookings(
+
+            bookings.filter(
+
+                b => b.status === "confirmed"
+
+            )
+
+        );
+
+    }catch(error){
+
+        console.error(error);
+
     }
 
-    bookings.forEach(booking => {
+}
+//==============================
+// عرض الحجوزات
+//==============================
 
-        container.innerHTML += createCard(booking);
+function renderBookings(bookings){
+
+    if(bookings.length===0){
+
+        bookingsContainer.innerHTML=
+
+        "<p>لا توجد حجوزات مؤكدة</p>";
+
+        return;
+
+    }
+
+    bookingsContainer.innerHTML="";
+
+    bookings.forEach(booking=>{
+
+        bookingsContainer.innerHTML += createCard(booking);
 
     });
 
 }
+//==============================
+// إنشاء البطاقة
+//==============================
 
-function createCard(booking) {
+function createCard(booking){
 
-    return `
+return `
 
-<div class="booking-item confirmed">
+<div class="booking-card">
 
-<div class="booking-header"
-onclick="toggleBooking('${booking.id}')">
+<h3>${booking.team}</h3>
 
-<div>
+<p>${booking.date}</p>
 
-<h3>⚽ ${booking.team}</h3>
+<p>
 
-<small>
+${booking.startTime}
 
-📅 ${booking.day} | ${booking.date}
+-
 
-</small>
+${booking.endTime}
 
-</div>
+</p>
 
-<div>
+<p>
 
-${booking.hours} ساعة
+${booking.hours}
 
-<i id="icon-${booking.id}"
-class="fa-solid fa-chevron-down"></i>
+ساعة
 
-</div>
+</p>
 
-</div>
+<p>
 
-<div
-id="${booking.id}"
-class="booking-details">
+${booking.total}
 
-<p><strong>رقم الحجز:</strong> ${booking.id}</p>
+ريال
 
-<p><strong>وقت البداية:</strong> ${booking.startTime}</p>
+</p>
 
-<p><strong>وقت النهاية:</strong> ${booking.endTime}</p>
+<div class="actions">
 
-<p><strong>عدد الساعات:</strong> ${booking.hours}</p>
-
-<p><strong>الإجمالي:</strong> ${booking.total} ريال</p>
-
-<div class="booking-buttons">
-
-<button
-class="edit-btn"
-onclick="editBooking('${booking.id}')">
+<button onclick="editBooking('${booking.id}')">
 
 تعديل
 
 </button>
 
-<button
-class="delete-btn"
-onclick="deleteBooking('${booking.id}')">
+<button onclick="deleteBooking('${booking.id}')">
 
 حذف
 
@@ -104,46 +140,46 @@ onclick="deleteBooking('${booking.id}')">
 
 </div>
 
-</div>
-
 `;
 
 }
-
-function toggleBooking(id){
-
-const card=document.getElementById(id);
-
-const icon=document.getElementById("icon-"+id);
-
-if(card.style.display==="block"){
-
-card.style.display="none";
-
-icon.className="fa-solid fa-chevron-down";
-
-}else{
-
-card.style.display="block";
-
-icon.className="fa-solid fa-chevron-up";
-
-}
-
-}
-
-function deleteBooking(id){
-
-if(!confirm("هل تريد حذف الحجز؟")) return;
-
-BookingStorage.deleteBooking(id);
-
-loadConfirmedBookings();
-
-}
+//==============================
+// تعديل
+//==============================
 
 function editBooking(id){
 
-    window.location.href = "booking.html?id=" + id;
+    window.location.href =
+
+    "booking.html?id=" + id;
+
+}
+//==============================
+// حذف
+//==============================
+
+async function deleteBooking(id){
+
+    if(!confirm("هل تريد حذف الحجز؟")){
+
+        return;
+
+    }
+
+    try{
+
+        const result = await BookingAPI.deleteBooking(id);
+
+        alert(result.message);
+
+        await loadBookings();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("حدث خطأ");
+
+    }
 
 }
