@@ -1,13 +1,13 @@
 /* ==========================================
-   Stadium Manager API
-   Version 2.2
+   Stadium Manager API v4.0
 ========================================== */
 
 class BookingAPI {
 
     //==============================
-    // قراءة رابط Google Apps Script
+    // رابط Apps Script
     //==============================
+
     static getApiUrl() {
 
         const settings = BookingStorage.getSettings();
@@ -16,100 +16,119 @@ class BookingAPI {
 
     }
 
+}
     //==============================
-    // إرسال طلب
+    // تنفيذ GET
     //==============================
-    static async request(action, data = {}) {
+
+    static async get(action) {
 
         const API_URL = this.getApiUrl();
 
         if (!API_URL) {
 
-            alert("يرجى إضافة رابط Google Apps Script من صفحة الإعدادات");
-
-            return null;
-
-        } 
-
-        try {
-
-            const formData = new URLSearchParams();
-
-            formData.append("action", action);
-
-            for (const key in data) {
-
-                if (typeof data[key] === "object") {
-
-                    formData.append(key, JSON.stringify(data[key]));
-
-                } else {
-
-                    formData.append(key, data[key]);
-
-                }
-
-            }
-
-            const response = await fetch(API_URL, {
-
-                method: "POST",
-
-                body: formData
-
-            });
-
-            if (!response.ok) {
-
-                throw new Error("HTTP Error : " + response.status);
-
-            }
-
-            const result = await response.json();
-
-            console.log("API Response:", result);
-
-            return result;
-
-        } catch (error) {
-
-            console.error("BookingAPI Error:", error);
-
-            alert(error.message || "تعذر الاتصال بـ Google Sheets");
-
-            return null;
+            throw new Error("لم يتم إدخال رابط Apps Script");
 
         }
+
+        const response = await fetch(
+
+            API_URL + "?action=" + action
+
+        );
+
+        return await response.json();
+
+    }
+    //==============================
+    // تنفيذ POST
+    //==============================
+
+    static async post(action, data = {}) {
+
+        const API_URL = this.getApiUrl();
+
+        if (!API_URL) {
+
+            throw new Error("لم يتم إدخال رابط Apps Script");
+
+        }
+
+        const formData = new URLSearchParams();
+
+        formData.append("action", action);
+
+        Object.keys(data).forEach(key => {
+
+            if (typeof data[key] === "object") {
+
+                formData.append(
+
+                    key,
+
+                    JSON.stringify(data[key])
+
+                );
+
+            } else {
+
+                formData.append(
+
+                    key,
+
+                    data[key]
+
+                );
+
+            }
+
+        });
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            body: formData
+
+        });
+
+        return await response.json();
+
+    }
+    //==============================
+    // قراءة جميع الحجوزات
+    //==============================
+
+    static async getBookings() {
+
+        return await this.get("getBookings");
 
     }
 
     //==============================
     // إضافة حجز
     //==============================
+
     static async saveBooking(booking) {
 
-        return await this.request("saveBooking", {
+        return await this.post("saveBooking", {
+
             booking
+
         });
-
-    }
-
-    //==============================
-    // قراءة جميع الحجوزات
-    //==============================
-    static async getBookings() {
-
-        return await this.request("getBookings");
 
     }
 
     //==============================
     // تعديل حجز
     //==============================
+
     static async updateBooking(booking) {
 
-        return await this.request("updateBooking", {
+        return await this.post("updateBooking", {
+
             booking
+
         });
 
     }
@@ -117,10 +136,13 @@ class BookingAPI {
     //==============================
     // حذف حجز
     //==============================
+
     static async deleteBooking(id) {
 
-        return await this.request("deleteBooking", {
+        return await this.post("deleteBooking", {
+
             id
+
         });
 
     }
@@ -128,10 +150,13 @@ class BookingAPI {
     //==============================
     // تأكيد الحجز
     //==============================
+
     static async confirmBooking(id) {
 
-        return await this.request("confirmBooking", {
+        return await this.post("confirmBooking", {
+
             id
+
         });
 
     }
@@ -139,9 +164,10 @@ class BookingAPI {
     //==============================
     // الإحصائيات
     //==============================
+
     static async getStatistics() {
 
-        return await this.request("getStatistics");
+        return await this.get("getStatistics");
 
     }
 
