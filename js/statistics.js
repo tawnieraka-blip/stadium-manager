@@ -1,123 +1,64 @@
 /* ==========================================
-   Statistics Page
-   Stadium Manager v1.0
+   Stadium Manager
+   statistics.js v4.0
 ========================================== */
 
-const monthSelect = document.getElementById("monthSelect");
+//==============================
+// عناصر الصفحة
+//==============================
 
-monthSelect.addEventListener("change", loadStatistics);
+const bookingsCard = document.getElementById("bookingsCount");
 
-loadStatistics();
+const teamsCard = document.getElementById("teamsCount");
 
-function loadStatistics() {
+const hoursCard = document.getElementById("hoursCount");
 
-    const selectedMonth = Number(monthSelect.value);
+const incomeCard = document.getElementById("incomeCount");
 
-    const allBookings = BookingStorage.getBookings();
+//==============================
+// البداية
+//==============================
 
-    let bookings = allBookings;
+init();
 
-    // تصفية حسب الشهر
-    if (selectedMonth !== 0) {
+async function init(){
 
-        bookings = allBookings.filter(item => {
+    await loadStatistics();
 
-            const month =
-                new Date(item.date).getMonth() + 1;
+}
 
-            return month === selectedMonth;
+//==============================
+// تحميل الإحصائيات
+//==============================
 
-        });
+async function loadStatistics(){
 
-    }
+    try{
 
-    const confirmed =
-        bookings.filter(item => item.status === "confirmed");
+        const stats = await BookingAPI.getStatistics();
 
-    const pending =
-        bookings.filter(item => item.status === "pending");
+        if(!stats){
 
-    let totalIncome = 0;
+            alert("تعذر تحميل الإحصائيات");
 
-    let totalHours = 0;
-
-    const teams = new Set();
-
-    const teamCounter = {};
-
-    confirmed.forEach(item => {
-
-        totalIncome += Number(item.total);
-
-        totalHours += Number(item.hours);
-
-        teams.add(item.team);
-
-        if (!teamCounter[item.team]) {
-
-            teamCounter[item.team] = 0;
+            return;
 
         }
 
-        teamCounter[item.team]++;
+        bookingsCard.textContent = stats.bookings || 0;
 
-    });
+        teamsCard.textContent = stats.teams || 0;
 
-    // أكثر فريق حجزاً
+        hoursCard.textContent = stats.hours || 0;
 
-    let topTeam = "---";
+        incomeCard.textContent = (stats.income || 0) + " ريال";
 
-    let maxBookings = 0;
+    }catch(error){
 
-    for (const team in teamCounter) {
+        console.error(error);
 
-        if (teamCounter[team] > maxBookings) {
-
-            maxBookings = teamCounter[team];
-
-            topTeam = team;
-
-        }
+        alert("حدث خطأ أثناء تحميل الإحصائيات");
 
     }
-
-    // متوسط قيمة الحجز
-
-    let average = 0;
-
-    if (confirmed.length > 0) {
-
-        average = Math.round(
-
-            totalIncome /
-
-            confirmed.length
-
-        );
-
-    }
-
-    // عرض النتائج
-
-    document.getElementById("incomeValue").textContent =
-        totalIncome + " ريال";
-
-    document.getElementById("hoursValue").textContent =
-        totalHours + " ساعة";
-
-    document.getElementById("teamsValue").textContent =
-        teams.size;
-
-    document.getElementById("confirmedValue").textContent =
-        confirmed.length;
-
-    document.getElementById("pendingValue").textContent =
-        pending.length;
-
-    document.getElementById("topTeamValue").textContent =
-        topTeam;
-
-    document.getElementById("averageValue").textContent =
-        average + " ريال";
 
 }
