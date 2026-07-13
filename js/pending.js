@@ -1,169 +1,220 @@
 /* ==========================================
-   Pending Bookings
+   Stadium Manager
+   pending.js v4.0
 ========================================== */
 
-const container = document.getElementById("pendingContainer");
+//==============================
+// عناصر الصفحة
+//==============================
 
-// تحميل الصفحة
-loadPendingBookings();
+const bookingsContainer = document.getElementById("bookings");
 
-function loadPendingBookings() {
+//==============================
+// بداية الصفحة
+//==============================
 
-    const bookings = BookingStorage.getPending();
+init();
 
-    container.innerHTML = "";
+async function init(){
 
-    if (bookings.length === 0) {
+    await loadBookings();
 
-        container.innerHTML = `
-            <div class="empty-card">
-                <i class="fa-solid fa-calendar-xmark"></i>
-                <h3>لا توجد حجوزات معلقة</h3>
-            </div>
-        `;
+}
+//==============================
+// تحميل الحجوزات
+//==============================
 
-        return;
+async function loadBookings(){
+
+    try{
+
+        const bookings = await BookingAPI.getBookings();
+
+        if(!Array.isArray(bookings)){
+
+            bookingsContainer.innerHTML =
+
+            "<p>لا توجد بيانات</p>";
+
+            return;
+
+        }
+
+        renderBookings(
+
+            bookings.filter(
+
+                b => b.status === "pending"
+
+            )
+
+        );
+
+    }catch(error){
+
+        console.error(error);
+
     }
 
-    bookings.forEach(booking => {
+}
+//==============================
+// عرض الحجوزات
+//==============================
 
-        container.innerHTML += createCard(booking);
+function renderBookings(bookings){
+
+    if(bookings.length === 0){
+
+        bookingsContainer.innerHTML =
+
+        "<p>لا توجد حجوزات معلقة</p>";
+
+        return;
+
+    }
+
+    bookingsContainer.innerHTML = "";
+
+    bookings.forEach(booking=>{
+
+        bookingsContainer.innerHTML += createCard(booking);
 
     });
 
 }
+//==============================
+// إنشاء بطاقة
+//==============================
 
-// إنشاء البطاقة
-function createCard(booking) {
+function createCard(booking){
 
-    return `
+return `
 
-<div class="booking-item">
+<div class="booking-card">
 
-    <div class="booking-header"
-         onclick="toggleBooking('${booking.id}')">
+<h3>${booking.team}</h3>
 
-        <div>
+<p>${booking.date}</p>
 
-            <h3>⚽ ${booking.team}</h3>
+<p>
 
-            <small>
+${booking.startTime}
 
-            📅 ${booking.day}
-            |
-            ${booking.date}
+-
 
-            </small>
+${booking.endTime}
 
-        </div>
+</p>
 
-        <div>
+<p>
 
-            ${booking.hours} ساعة
+${booking.hours}
 
-            <i id="icon-${booking.id}"
-            class="fa-solid fa-chevron-down"></i>
+ساعة
 
-        </div>
+</p>
 
-    </div>
+<p>
 
-    <div
-        id="${booking.id}"
-        class="booking-details">
+${booking.total}
 
-        <p><strong>وقت البداية:</strong> ${booking.startTime}</p>
+ريال
 
-        <p><strong>وقت النهاية:</strong> ${booking.endTime}</p>
+</p>
 
-        <p><strong>عدد الساعات:</strong> ${booking.hours}</p>
+<div class="actions">
 
-        <p><strong>الإجمالي:</strong> ${booking.total} ريال</p>
+<button onclick="editBooking('${booking.id}')">
 
-        <div class="booking-buttons">
+تعديل
 
-            <button
-                class="edit-btn"
-                onclick="editBooking('${booking.id}')">
+</button>
 
-                تعديل
+<button onclick="confirmBooking('${booking.id}')">
 
-            </button>
+تأكيد
 
-            <button
-                class="delete-btn"
-                onclick="deleteBooking('${booking.id}')">
+</button>
 
-                حذف
+<button onclick="deleteBooking('${booking.id}')">
 
-            </button>
+حذف
 
-            <button
-                class="confirm-btn"
-                onclick="confirmBooking('${booking.id}')">
+</button>
 
-                تأكيد
-
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 `;
 
 }
+//==============================
+// تعديل الحجز
+//==============================
 
-// فتح وغلق البطاقة
-function toggleBooking(id){
+function editBooking(id){
 
-    const card=document.getElementById(id);
+    window.location.href =
 
-    const icon=document.getElementById("icon-"+id);
+    "booking.html?id=" + id;
 
-    if(card.style.display==="block"){
+}
+//==============================
+// تأكيد الحجز
+//==============================
 
-        card.style.display="none";
+async function confirmBooking(id){
 
-        icon.className="fa-solid fa-chevron-down";
+    if(!confirm("هل تريد تأكيد هذا الحجز؟")){
 
-    }else{
+        return;
 
-        card.style.display="block";
+    }
 
-        icon.className="fa-solid fa-chevron-up";
+    try{
+
+        const result = await BookingAPI.confirmBooking(id);
+
+        alert(result.message);
+
+        await loadBookings();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("حدث خطأ");
 
     }
 
 }
+//==============================
+// حذف الحجز
+//==============================
 
-// حذف
-function deleteBooking(id){
+async function deleteBooking(id){
 
-    if(!confirm("هل تريد حذف الحجز؟")) return;
+    if(!confirm("هل تريد حذف الحجز؟")){
 
-    BookingStorage.deleteBooking(id);
+        return;
 
-    loadPendingBookings();
+    }
 
-}
+    try{
 
-// تأكيد
-function confirmBooking(id){
+        const result = await BookingAPI.deleteBooking(id);
 
-    BookingStorage.confirmBooking(id);
+        alert(result.message);
 
-    loadPendingBookings();
+        await loadBookings();
 
-    alert("تم تأكيد الحجز");
+    }catch(error){
 
-}
+        console.error(error);
 
-// تعديل
-function editBooking(id){
+        alert("حدث خطأ");
 
-    window.location.href = "booking.html?id=" + id;
+    }
 
 }
