@@ -7,13 +7,14 @@
 // عناصر الصفحة
 //==============================
 
-const bookingsCard = document.getElementById("bookingsCount");
-
-const teamsCard = document.getElementById("teamsCount");
-
-const hoursCard = document.getElementById("hoursCount");
-
-const incomeCard = document.getElementById("incomeCount");
+const incomeValue = document.getElementById("incomeValue");
+const hoursValue = document.getElementById("hoursValue");
+const teamsValue = document.getElementById("teamsValue");
+const confirmedValue = document.getElementById("confirmedValue");
+const pendingValue = document.getElementById("pendingValue");
+const topTeamValue = document.getElementById("topTeamValue");
+const averageValue = document.getElementById("averageValue");
+const monthSelect = document.getElementById("monthSelect");
 
 //==============================
 // البداية
@@ -25,6 +26,12 @@ async function init(){
 
     await loadStatistics();
 
+    if(monthSelect){
+
+        monthSelect.addEventListener("change", loadStatistics);
+
+    }
+
 }
 
 //==============================
@@ -35,30 +42,139 @@ async function loadStatistics(){
 
     try{
 
-        const stats = await BookingAPI.getStatistics();
+        const bookings = await BookingAPI.getBookings();
 
-        if(!stats){
-
-            alert("تعذر تحميل الإحصائيات");
+        if(!Array.isArray(bookings)){
 
             return;
 
         }
 
-        bookingsCard.textContent = stats.bookings || 0;
+        let data = bookings;
 
-        teamsCard.textContent = stats.teams || 0;
+        // فلترة بالشهر
+        if(monthSelect && monthSelect.value !== "0"){
 
-        hoursCard.textContent = stats.hours || 0;
+            const month = Number(monthSelect.value);
 
-        incomeCard.textContent = (stats.income || 0) + " ريال";
+            data = bookings.filter(item=>{
+
+                const d = new Date(item.date);
+
+                return (d.getMonth()+1) === month;
+
+            });
+
+        }
+
+        calculateStatistics(data);
 
     }catch(error){
 
         console.error(error);
 
-        alert("حدث خطأ أثناء تحميل الإحصائيات");
+        alert("تعذر تحميل الإحصائيات");
 
     }
+
+}
+
+//==============================
+// حساب الإحصائيات
+//==============================
+
+function calculateStatistics(bookings){
+
+    let income = 0;
+
+    let hours = 0;
+
+    let confirmed = 0;
+
+    let pending = 0;
+
+    const teams = new Set();
+
+    const teamCounter = {};
+
+    bookings.forEach(item=>{
+
+        teams.add(item.team);
+
+        if(item.status === "confirmed"){
+
+            confirmed++;
+
+            income += Number(item.total) || 0;
+
+            hours += Number(item.hours) || 0;
+
+        }else{
+
+            pending++;
+
+        }
+
+        if(!teamCounter[item.team]){
+
+            teamCounter[item.team] = 0;
+
+        }
+
+        teamCounter[item.team]++;
+
+    });
+
+    // أكثر فريق
+
+    let topTeam = "---";
+
+    let max = 0;
+
+    Object.keys(teamCounter).forEach(team=>{
+
+        if(teamCounter[team] > max){
+
+            max = teamCounter[team];
+
+            topTeam = team;
+
+        }
+
+    });
+
+    // متوسط قيمة الحجز
+
+    const average =
+
+        bookings.length
+
+        ?
+
+        Math.round(
+
+            income / bookings.length
+
+        )
+
+        :
+
+        0;
+
+    // عرض النتائج
+
+    incomeValue.textContent = income + " ريال";
+
+    hoursValue.textContent = hours;
+
+    teamsValue.textContent = teams.size;
+
+    confirmedValue.textContent = confirmed;
+
+    pendingValue.textContent = pending;
+
+    topTeamValue.textContent = topTeam;
+
+    averageValue.textContent = average + " ريال";
 
 }
